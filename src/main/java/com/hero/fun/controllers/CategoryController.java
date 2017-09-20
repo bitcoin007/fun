@@ -36,56 +36,56 @@ public class CategoryController {
 	
 	@RequestMapping(value="/ca/categoryadd", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> saveCategory(@RequestParam("id") UUID id, @RequestParam("typename") String typename, @RequestParam("description") String description){
+	public ResponseEntity<String> saveCategory(@RequestParam("id") UUID id, @RequestParam("typename") String typename, @RequestParam("description") String description){
 		log.info("=====================saveCategory===================");
 		Category category = new Category();
 		category.setDescription(description);
 		category.setTypename(typename);
 		category.setId(id);
 		categoryRepository.save(category);
-		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryadd2", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> saveCategory2(@RequestBody Category category){
+	public ResponseEntity<String> saveCategory2(@RequestBody Category category){
 		log.info("===================saveCategory2=====================");
 		categoryRepository.save(category);
-		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryget", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getCategoryById(@RequestParam("categoryId") UUID categoryId){
+	public ResponseEntity<Object> getCategoryById(@RequestParam("categoryId") UUID categoryId){
 		log.info("===================getCategoryById=====================");
 		Object result = categoryRepository.findOne(categoryId);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<Object>(result, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categorydel", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<?> deleteCategory(@RequestParam("categoryId") UUID categoryId){
+	public ResponseEntity<String> deleteCategory(@RequestParam("categoryId") UUID categoryId){
 		log.info("===================deleteCategory=====================");
 		categoryRepository.delete(categoryId);
-		return new ResponseEntity<>("DELETE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<String>("DELETE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryupd", method = RequestMethod.PUT)
 	@ResponseBody
-	public ResponseEntity<?> updateCategory(@RequestBody Category category){
+	public ResponseEntity<String> updateCategory(@RequestBody Category category){
 		log.info("===================updateCategory=====================");
 		Category categoryUpdate = categoryRepository.findOne(category.getId());
 		categoryUpdate.setDescription(category.getDescription());
 		categoryUpdate.setTypename(category.getTypename());
 		categoryRepository.save(categoryUpdate);
-		return new ResponseEntity<>("UPDATE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<String>("UPDATE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categorygetbynamedesc", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<?> getCategoryByTypeNameAndDesc(@RequestParam(value = "typename", required = true) String typename, @RequestParam(value = "description", required = true) String description){
+	public ResponseEntity<List<Category>> getCategoryByTypeNameAndDesc(@RequestParam(value = "typename", required = true) String typename, @RequestParam(value = "description", required = true) String description){
 		log.info("===================getCategoryByTypeNameAndDesc=====================");
 		List<Category> result = categoryRepository.findByTypeNameAndDescription(typename, description);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<List<Category>>(result, HttpStatus.OK);
 	}
 }
