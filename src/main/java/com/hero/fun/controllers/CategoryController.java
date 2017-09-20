@@ -43,7 +43,7 @@ public class CategoryController {
 		category.setTypename(typename);
 		category.setId(id);
 		categoryRepository.save(category);
-		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryadd2", method = RequestMethod.POST)
@@ -51,7 +51,7 @@ public class CategoryController {
 	public ResponseEntity<String> saveCategory2(@RequestBody Category category){
 		log.info("===================saveCategory2=====================");
 		categoryRepository.save(category);
-		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryget", method = RequestMethod.GET, produces = "application/json")
@@ -59,7 +59,7 @@ public class CategoryController {
 	public ResponseEntity<Object> getCategoryById(@RequestParam("categoryId") UUID categoryId){
 		log.info("===================getCategoryById=====================");
 		Object result = categoryRepository.findOne(categoryId);
-		return new ResponseEntity<Object>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categorydel", method = RequestMethod.DELETE)
@@ -67,7 +67,7 @@ public class CategoryController {
 	public ResponseEntity<String> deleteCategory(@RequestParam("categoryId") UUID categoryId){
 		log.info("===================deleteCategory=====================");
 		categoryRepository.delete(categoryId);
-		return new ResponseEntity<String>("DELETE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("DELETE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categoryupd", method = RequestMethod.PUT)
@@ -78,7 +78,7 @@ public class CategoryController {
 		categoryUpdate.setDescription(category.getDescription());
 		categoryUpdate.setTypename(category.getTypename());
 		categoryRepository.save(categoryUpdate);
-		return new ResponseEntity<String>("UPDATE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("UPDATE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/ca/categorygetbynamedesc", method = RequestMethod.GET, produces = "application/json")
@@ -86,6 +86,6 @@ public class CategoryController {
 	public ResponseEntity<List<Category>> getCategoryByTypeNameAndDesc(@RequestParam(value = "typename", required = true) String typename, @RequestParam(value = "description", required = true) String description){
 		log.info("===================getCategoryByTypeNameAndDesc=====================");
 		List<Category> result = categoryRepository.findByTypeNameAndDescription(typename, description);
-		return new ResponseEntity<List<Category>>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

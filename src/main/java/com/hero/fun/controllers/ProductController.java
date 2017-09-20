@@ -54,7 +54,7 @@ public class ProductController {
 		product.setTypename(typename);
 		product.setCategory(categoryRepository.findOne(categoryid));
 		productRepository.save(product);
-		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productadd2", method = RequestMethod.POST)
@@ -62,7 +62,7 @@ public class ProductController {
 	public ResponseEntity<String> saveProduct2(@RequestBody Product product){
 		log.info("====================saveProduct2====================");
 		productRepository.save(product);
-		return new ResponseEntity<String>("ADD SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("ADD SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productget", method = RequestMethod.GET, produces = "application/json")
@@ -70,7 +70,7 @@ public class ProductController {
 	public ResponseEntity<Object> getProductById(@RequestParam("productId") UUID productId){
 		log.info("==================getProductById======================");
 		Object result = productRepository.findOne(productId);
-		return new ResponseEntity<Object>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productdel", method = RequestMethod.DELETE)
@@ -78,7 +78,7 @@ public class ProductController {
 	public ResponseEntity<String> deleteProduct(@RequestParam("productId") UUID productId){
 		log.info("===================deleteProduct=====================");
 		productRepository.delete(productId);
-		return new ResponseEntity<String>("DELETE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("DELETE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productupd", method = RequestMethod.PUT)
@@ -90,7 +90,7 @@ public class ProductController {
 		productUpdate.setTypename(product.getTypename());
 		productUpdate.setCategory(product.getCategory());
 		productRepository.save(productUpdate);
-		return new ResponseEntity<String>("UPDATE SUCCESS!", HttpStatus.OK);
+		return new ResponseEntity<>("UPDATE SUCCESS!", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productgetbynamedesc", method = RequestMethod.GET, produces = "application/json")
@@ -98,7 +98,7 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getProductByTypenameAndDesc(@RequestParam(value = "typename", required = true) String typename, @RequestParam(value = "description", required = true) String description){
 		log.info("==================getProductByTypenameAndDesc======================");
 		List<Product> result = productRepository.findByTypeNameAndDescription(typename, description);
-		return new ResponseEntity<List<Product>>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/pr/productsetimage", method = RequestMethod.PUT, produces = "application/json")
@@ -110,7 +110,7 @@ public class ProductController {
 		byte[] fileContent = Files.readAllBytes(fi.toPath());
 		result.setImage(fileContent);
 		productRepository.save(result);
-		return new ResponseEntity<Product>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	@RequestMapping(value="/pr/productgetimage", method = RequestMethod.GET)
 	@ResponseBody
@@ -120,6 +120,6 @@ public class ProductController {
 		byte[] image = result.getImage();
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-		return new ResponseEntity<byte[]>(image,headers, HttpStatus.OK);
+		return new ResponseEntity<>(image,headers, HttpStatus.OK);
 	}
 }
